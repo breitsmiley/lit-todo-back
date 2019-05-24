@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as Joi from 'joi';
 import * as fs from 'fs';
+import {TypeOrmModuleOptions, TypeOrmOptionsFactory} from "@nestjs/typeorm";
 
 export interface EnvConfig {
-    [key: string]: string;
+    [key: string]: any;
 }
 
 @Injectable()
-export class ConfigService {
+export class ConfigService implements TypeOrmOptionsFactory {
     private readonly envConfig: EnvConfig;
 
     constructor(filePath: string) {
@@ -27,6 +28,12 @@ export class ConfigService {
                 .default('development'),
             // PORT: Joi.number().default(3000),
             API_AUTH_ENABLED: Joi.boolean().required(),
+
+            APP_DB_HOST: Joi.string().required(),
+            APP_DB_PORT: Joi.number().required(),
+            APP_DB_USERNAME: Joi.string().required(),
+            APP_DB_PASSWORD: Joi.string().required(),
+            APP_DB_DATABASE: Joi.string().required(),
         });
 
         const { error, value: validatedEnvConfig } = Joi.validate(
@@ -41,6 +48,31 @@ export class ConfigService {
 
     get isApiAuthEnabled(): boolean {
         return Boolean(this.envConfig.API_AUTH_ENABLED);
+    }
+
+    /**
+     * TYPEORM async configuration
+     * https://docs.nestjs.com/techniques/database
+     */
+    createTypeOrmOptions(): TypeOrmModuleOptions {
+        return {
+            type: 'mysql',
+            host: this.envConfig.APP_DB_HOST,
+            port: this.envConfig.APP_DB_PORT,
+            username: this.envConfig.APP_DB_USERNAME,
+            password: this.envConfig.APP_DB_PASSWORD,
+            database: this.envConfig.APP_DB_DATABASE,
+            entities: [
+                __dirname + '/../**/*.entity.{js,ts}'
+            ],
+            migrations: [
+                __dirname + '/../migration/*.{js,ts}'
+            ],
+            cli: {
+                migrationsDir: __dirname + '/../migration'
+            },
+            synchronize: false,
+        };
     }
 
 }
