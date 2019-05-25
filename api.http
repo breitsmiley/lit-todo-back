@@ -3,10 +3,11 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "token": "my-secret-token"
+  "email": "admin@lit.loc",
+  "password": "lit-admin"
 }
 
-> {% client.global.set("auth_token", response.body.accessToken); %}
+> {% client.global.set("auth_token", response.body.token); %}
 
 ### Authorization by token, part 2. Use token to authorize.
 GET http://localhost:3000/data

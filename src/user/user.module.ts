@@ -4,8 +4,10 @@ import {UserRepository} from "./repository";
 import {TypeOrmModule} from "@nestjs/typeorm";
 
 @Module({
-    // imports: [TypeOrmModule.forFeature([UserRepository])],
-    providers: [UserService], 
+    imports: [
+        TypeOrmModule.forFeature([UserRepository])
+    ],
+    providers: [UserService],
     exports: [UserService]
 })
 export class UserModule {

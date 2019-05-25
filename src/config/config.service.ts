@@ -3,13 +3,15 @@ import * as dotenv from 'dotenv';
 import * as Joi from 'joi';
 import * as fs from 'fs';
 import {TypeOrmModuleOptions, TypeOrmOptionsFactory} from "@nestjs/typeorm";
+import { JwtModuleOptions, JwtOptionsFactory } from "@nestjs/jwt";
+import { AuthOptionsFactory, IAuthModuleOptions } from "@nestjs/passport";
 
 export interface EnvConfig {
     [key: string]: any;
 }
 
 @Injectable()
-export class ConfigService implements TypeOrmOptionsFactory {
+export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, AuthOptionsFactory {
     private readonly envConfig: EnvConfig;
 
     constructor(filePath: string) {
@@ -34,6 +36,10 @@ export class ConfigService implements TypeOrmOptionsFactory {
             APP_DB_USERNAME: Joi.string().required(),
             APP_DB_PASSWORD: Joi.string().required(),
             APP_DB_DATABASE: Joi.string().required(),
+            
+            APP_JWT_SECRET_KEY: Joi.string().required(),
+            APP_JWT_TOKEN_TTL: Joi.number().required(),
+            APP_JWT_TOKEN_NAME: Joi.string().required(),
         });
 
         const {error, value: validatedEnvConfig} = Joi.validate(
@@ -48,6 +54,18 @@ export class ConfigService implements TypeOrmOptionsFactory {
 
     get isApiAuthEnabled(): boolean {
         return Boolean(this.envConfig.API_AUTH_ENABLED);
+    }
+
+    get jwtSecretKey(): string {
+        return this.envConfig.APP_JWT_SECRET_KEY;
+    }
+
+    get jwtTokenName(): string {
+        return this.envConfig.APP_JWT_TOKEN_NAME;
+    }
+
+    get jwtTokenTTL(): number {
+        return this.envConfig.APP_JWT_TOKEN_TTL;
     }
 
     /**
@@ -73,6 +91,23 @@ export class ConfigService implements TypeOrmOptionsFactory {
             },
             synchronize: false,
         };
+    }
+
+
+    createJwtOptions(): JwtModuleOptions {
+
+        return {
+            secret: this.jwtSecretKey,
+            signOptions: {
+                expiresIn: this.jwtTokenTTL,
+            },
+
+        }
+
+    }
+
+    createAuthOptions(): IAuthModuleOptions {
+        return {defaultStrategy: 'jwt'}
     }
 
 }

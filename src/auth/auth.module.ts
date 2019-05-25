@@ -5,16 +5,15 @@ import { JwtStrategy } from './jwt.strategy';
 import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from "./auth.controller";
+import { ConfigService } from "../config/config.service";
 
 @Module({
     imports: [
-        PassportModule.register({defaultStrategy: 'jwt'}),
-        JwtModule.register({
-            // secretOrPrivateKey: 'secretKey',
-            secret: 'secretKey',
-            signOptions: {
-                expiresIn: 3600,
-            },
+        PassportModule.registerAsync({
+            useExisting: ConfigService,
+        }),
+        JwtModule.registerAsync({
+            useExisting: ConfigService,
         }),
         UserModule,
     ],
