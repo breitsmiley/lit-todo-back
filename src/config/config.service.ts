@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as Joi from 'joi';
 import * as fs from 'fs';
@@ -36,7 +36,7 @@ export class ConfigService implements TypeOrmOptionsFactory {
             APP_DB_DATABASE: Joi.string().required(),
         });
 
-        const { error, value: validatedEnvConfig } = Joi.validate(
+        const {error, value: validatedEnvConfig} = Joi.validate(
             envConfig,
             envVarsSchema,
         );
@@ -69,7 +69,7 @@ export class ConfigService implements TypeOrmOptionsFactory {
                 __dirname + '/../migration/*.{js,ts}'
             ],
             cli: {
-                migrationsDir: __dirname + '/../migration'
+                migrationsDir: 'src/migration'
             },
             synchronize: false,
         };

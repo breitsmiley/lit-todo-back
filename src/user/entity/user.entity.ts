@@ -2,12 +2,12 @@ import {Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn} from "typ
 
 @Entity({
     engine: 'InnoDB',
-    name: 'requisite'
+    name: 'user'
 })
 export class User {
 
     @PrimaryGeneratedColumn({
-        type: 'bigint'
+        type: 'int'
     })
     id: number;
 
@@ -15,5 +15,5 @@ export class User {
         type: 'varchar',
         length: 64
     })
-    requisite: string;
+    login: string;
 }
