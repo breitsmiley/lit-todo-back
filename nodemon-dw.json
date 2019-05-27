@@ -1,6 +1,7 @@
 {
   "watch": [
-    "src"
+    "src",
+    "ormconfig.ts"
   ],
   "ext": "ts",
   "ignore": ["src/**/*.spec.ts"],

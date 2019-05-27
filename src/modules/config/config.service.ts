@@ -80,14 +80,16 @@ export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, 
             username: this.envConfig.APP_DB_USERNAME,
             password: this.envConfig.APP_DB_PASSWORD,
             database: this.envConfig.APP_DB_DATABASE,
+            keepConnectionAlive: true,
             entities: [
-                __dirname + '/../**/*.entity.{js,ts}'
+                // Project, User,ProjectColor, Task
+                __dirname + '/../../db/entities/*.entity.{js,ts}'
             ],
             migrations: [
-                __dirname + '/../migration/*.{js,ts}'
+                __dirname + '/../../db/migration/*.{js,ts}'
             ],
             cli: {
-                migrationsDir: 'src/migration'
+                migrationsDir: 'src/db/migration'
             },
             synchronize: false,
         };

@@ -2,10 +2,14 @@ import {  Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from "../user/user.service";
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { User } from "../user/entity";
 import { AppWrongCredentialsException } from "./exeptions";
 import { ConfigService } from "../config/config.service";
+import { User } from "../../db/entities";
 
+/**
+ * https://gist.github.com/zmts/802dc9c3510d79fd40f9dc38a12bccfc
+ * https://medium.com/@maison.moa/using-jwt-json-web-tokens-to-authorize-users-and-protect-api-routes-3e04a1453c3e
+ */
 @Injectable()
 export class AuthService {
     constructor(
