@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from "./modules/config/config.service";
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { UserRepository } from "./db/repository";
+import { UserRepository } from "./modules/user/repository";
 
 
 @Module({
@@ -17,10 +17,12 @@ import { UserRepository } from "./db/repository";
             imports: [ConfigModule],
             useExisting: ConfigService,
         }),
-        // GraphQLModule.forRoot({
-        //     // debug: false,
-        //     // playground: false,
-        // }),
+        GraphQLModule.forRoot({
+            // debug: false,
+            // playground: false,
+            installSubscriptionHandlers: true,
+            autoSchemaFile: 'schema.gql',
+        }),
         AuthModule,
         UserModule,
         // ProjectModule,

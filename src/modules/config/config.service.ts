@@ -1,8 +1,8 @@
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import * as Joi from 'joi';
 import * as fs from 'fs';
-import {TypeOrmModuleOptions, TypeOrmOptionsFactory} from "@nestjs/typeorm";
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { JwtModuleOptions, JwtOptionsFactory } from "@nestjs/jwt";
 import { AuthOptionsFactory, IAuthModuleOptions } from "@nestjs/passport";
 
@@ -36,7 +36,7 @@ export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, 
             APP_DB_USERNAME: Joi.string().required(),
             APP_DB_PASSWORD: Joi.string().required(),
             APP_DB_DATABASE: Joi.string().required(),
-            
+
             APP_JWT_SECRET_KEY: Joi.string().required(),
             APP_JWT_TOKEN_TTL: Joi.number().required(),
             APP_JWT_TOKEN_NAME: Joi.string().required(),
@@ -82,14 +82,15 @@ export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, 
             database: this.envConfig.APP_DB_DATABASE,
             keepConnectionAlive: true,
             entities: [
+                // TODO https://github.com/typeorm/typeorm/issues/420#issuecomment-393316360
                 // Project, User,ProjectColor, Task
-                __dirname + '/../../db/entities/*.entity.{js,ts}'
+                __dirname + '/../../modules/**/entity/*.entity.{js,ts}',
             ],
             migrations: [
-                __dirname + '/../../db/migration/*.{js,ts}'
+                __dirname + '/../../migration/*.{js,ts}'
             ],
             cli: {
-                migrationsDir: 'src/db/migration'
+                migrationsDir: 'src/migration'
             },
             synchronize: false,
         };

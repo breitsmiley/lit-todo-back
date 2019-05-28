@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { JwtPayload } from "../auth/interfaces/jwt-payload.interface";
-import { UserRepository } from "../../db/repository";
-import { User } from "../../db/entities";
+import { User } from "./entity";
+import { UserRepository } from "./repository";
+import { UserModelGql } from "./graphql/model/user.model.gql";
+import { UsersArgs } from "./graphql/dto/user.args";
 
 @Injectable()
 export class UserService {
@@ -33,4 +35,16 @@ export class UserService {
     //
     //     return isMatch ? user : undefined;
     // }
+
+    async findOneById(id: number): Promise<UserModelGql> {
+        return {
+            id: 1,
+            name: 'asd',
+            createdAt: new Date()
+        };
+    }
+
+    async findAll(usersArgs: UsersArgs): Promise<UserModelGql[]> {
+        return [] as UserModelGql[];
+    }
 }

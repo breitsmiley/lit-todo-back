@@ -4,7 +4,7 @@ import { UserService } from "../user/user.service";
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { AppWrongCredentialsException } from "./exeptions";
 import { ConfigService } from "../config/config.service";
-import { User } from "../../db/entities";
+import { User } from "../user/entity";
 
 /**
  * https://gist.github.com/zmts/802dc9c3510d79fd40f9dc38a12bccfc
