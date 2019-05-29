@@ -24,6 +24,8 @@ export class init1558991500863 implements MigrationInterface {
 
     private async postUp(queryRunner: QueryRunner): Promise<any> {
 
+        // ... User
+        //--------------------------------
         const bcrypt = require('bcrypt');
         const saltRounds = 12;
 
@@ -31,11 +33,26 @@ export class init1558991500863 implements MigrationInterface {
         const adminPlaintextPassword = 'lit-admin';
         const password = await bcrypt.hash(adminPlaintextPassword, saltRounds);
 
-        const clientSQL = 'INSERT INTO `user` (`id`,`email`, `password`) VALUES ' +
-            `(1,'${adminEmail}','${password}')`;
+        const usersSQL = 'INSERT INTO `user` (`email`, `password`) VALUES ' +
+            `('${adminEmail}','${password}')`;
 
-        await queryRunner.query(clientSQL);
+        await queryRunner.query(usersSQL);
+        //--------------------------------
 
+        // ... Project Color
+        //--------------------------------
+        const projectColorsSQL = 'INSERT INTO `project_color` (`name`, `code`) VALUES ' +
+            '("Lime","00FF00"), ' +
+            '("Red","FF0000"), ' +
+            '("Yellow","FFFF00"), ' +
+            '("Aqua","00FFFF"), ' +
+            '("Fuchsia","FF00FF"), ' +
+            '("Maroon","800000"), ' +
+            '("Blue","0000FF"), ' +
+            '("Gray","808080"), ' +
+            '("Black","000000")';
+
+        await queryRunner.query(projectColorsSQL);
     }
 
 }

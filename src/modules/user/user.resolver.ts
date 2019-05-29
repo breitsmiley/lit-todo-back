@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveProperty, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'apollo-server-express';
 import { UserService } from './user.service';
 import { UsersArgs } from "./graphql/dto/user.args";
@@ -23,6 +23,11 @@ export class UserResolver {
     @Query(returns => [UserModelGql])
     users(@Args() usersArgs:UsersArgs): Promise<UserModelGql[]> {
         return this.userService.findAll(usersArgs);
+    }
+
+    @ResolveProperty()
+    async ttt(@Parent() user) {
+        return 666;
     }
 
 }

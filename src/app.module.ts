@@ -17,18 +17,15 @@ import { UserRepository } from "./modules/user/repository";
             imports: [ConfigModule],
             useExisting: ConfigService,
         }),
-        GraphQLModule.forRoot({
-            // debug: false,
-            // playground: false,
-            installSubscriptionHandlers: true,
-            autoSchemaFile: 'schema.gql',
-        }),
+        GraphQLModule.forRootAsync({
+            imports: [ConfigModule],
+            useExisting: ConfigService, 
+        }),        
         AuthModule,
         UserModule,
         // ProjectModule,
         // TaskModule,
         TypeOrmModule.forFeature([UserRepository]),
-
     ],
     controllers: [AppController],
     providers: [AppService],

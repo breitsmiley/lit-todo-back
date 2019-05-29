@@ -14,3 +14,31 @@ GET http://localhost:3000/data
 Authorization: Bearer {{auth_token}}
 
 ###
+
+### GRAPHQL Authorization by token, part 1. Retrieve and save token.
+POST http://localhost:3000/graphql
+Content-Type: application/json
+
+{
+  "query": "{ login(email: \"admin@lit.loc\", password: \"lit-admin\") {token} }"
+}
+
+> {% client.global.set("auth_token", response.body.token); %}
+
+### Authorization by token, part 2. Use token to authorize.
+GET http://localhost:3000/data
+Authorization: Bearer {{auth_token}}
+
+###
+
+
+
+### Graphql example
+POST http://localhost:3000/graphql
+Content-Type: application/json
+
+{
+  "query": "{ user (id: 1 ) {id,name,createdAt} }"
+}
+
+###

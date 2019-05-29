@@ -11,13 +11,13 @@ export class AuthController {
     ) {
     }
 
-    @Post('login')
-    @HttpCode(200)
-    @UsePipes(new ValidationPipe())
-    async login(@Request() request, @Body() requestObj: AuthLoginDto): Promise<any> {
-        const token = await this.authService.login(requestObj.email, requestObj.password);
-        return {
-            [this.configService.jwtTokenName]: token
-        }
-    }
+    // @Post('login')
+    // @HttpCode(200)
+    // @UsePipes(new ValidationPipe())
+    // async login(@Request() request, @Body() requestObj: AuthLoginDto): Promise<any> {
+    //     const token = await this.authService.login(requestObj.email, requestObj.password);
+    //     return {
+    //         [this.configService.jwtTokenName]: token
+    //     }
+    // }
 }

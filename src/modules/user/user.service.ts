@@ -40,7 +40,7 @@ export class UserService {
         return {
             id: 1,
             name: 'asd',
-            createdAt: new Date()
+            createdAt: new Date(),
         };
     }
 

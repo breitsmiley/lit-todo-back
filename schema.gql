@@ -6,13 +6,19 @@
 """Date custom scalar type"""
 scalar Date
 
+type JwtAuthTokenResponseModelGql {
+  token: String!
+}
+
 type Query {
   user(id: Float!): UserModelGql!
   users(skip: Int = 0, take: Int = 25): [UserModelGql!]!
+  login(email: String!, password: String!): JwtAuthTokenResponseModelGql!
 }
 
 type UserModelGql {
   id: ID!
   name: String!
   createdAt: Date!
+  ttt: ID!
 }

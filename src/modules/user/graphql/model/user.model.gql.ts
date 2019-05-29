@@ -10,4 +10,7 @@ export class UserModelGql {
 
     @Field()
     createdAt: Date;
+
+    @Field(type => ID)
+    ttt?: number;
 }

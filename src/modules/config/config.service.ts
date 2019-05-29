@@ -5,13 +5,14 @@ import * as fs from 'fs';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { JwtModuleOptions, JwtOptionsFactory } from "@nestjs/jwt";
 import { AuthOptionsFactory, IAuthModuleOptions } from "@nestjs/passport";
+import { GqlModuleOptions, GqlOptionsFactory } from "@nestjs/graphql";
 
 export interface EnvConfig {
     [key: string]: any;
 }
 
 @Injectable()
-export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, AuthOptionsFactory {
+export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, AuthOptionsFactory, GqlOptionsFactory {
     private readonly envConfig: EnvConfig;
 
     constructor(filePath: string) {
@@ -54,6 +55,14 @@ export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, 
 
     get isApiAuthEnabled(): boolean {
         return Boolean(this.envConfig.API_AUTH_ENABLED);
+    }
+
+    get isProdEnv(): boolean {
+        return Boolean(this.envConfig.NODE_ENV === "production");
+    }
+
+    get isDevEnv(): boolean {
+        return Boolean(this.envConfig.NODE_ENV === "development");
     }
 
     get jwtSecretKey(): string {
@@ -111,6 +120,15 @@ export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, 
 
     createAuthOptions(): IAuthModuleOptions {
         return {defaultStrategy: 'jwt'}
+    }
+
+    createGqlOptions() {
+        return {
+            debug: this.isDevEnv,
+            playground: this.isDevEnv,
+            // installSubscriptionHandlers: true,
+            autoSchemaFile: 'schema.gql',
+        }
     }
 
 }
