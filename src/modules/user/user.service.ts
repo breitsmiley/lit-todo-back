@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { JwtPayload } from "../auth/interfaces/jwt-payload.interface";
+import { IJwtPayload } from "../auth/interfaces/jwt-payload.interface";
 import { User } from "./entity";
 import { UserRepository } from "./repository";
 import { UserModelGql } from "./graphql/model/user.model.gql";

@@ -8,7 +8,6 @@ import { AuthController } from "./auth.controller";
 import { ConfigService } from "../config/config.service";
 import { AuthResolver } from "./auth.resolver";
 
-
 @Module({
     imports: [
         PassportModule.registerAsync({
