@@ -10,6 +10,10 @@ type JwtAuthTokenResponseModelGql {
   token: String!
 }
 
+type Mutation {
+  signup(email: String!, password: String!): JwtAuthTokenResponseModelGql!
+}
+
 type Query {
   user(id: Float!): UserModelGql!
   users(skip: Int = 0, take: Int = 25): [UserModelGql!]!

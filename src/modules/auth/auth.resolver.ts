@@ -19,6 +19,13 @@ export class AuthResolver {
         };
     }
 
+    @Mutation(returns => JwtAuthTokenResponseModelGql)
+    async signup(@Args() signupArgs: AuthLoginArgs) {
+        return {
+            token: await this.authService.signup(signupArgs.email, signupArgs.password)
+        };
+    }
+
     // @Query(returns => JwtAuthTokenResponseModelGql)
     // async signup(@Args() signupArgs: AuthSignupArgs) {
     //     return {

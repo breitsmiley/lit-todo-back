@@ -5,6 +5,9 @@ import { IJwtPayload } from './interfaces/jwt-payload.interface';
 import { AppWrongCredentialsException } from "./exeptions";
 import { ConfigService } from "../config/config.service";
 import { User } from "../user/entity";
+import {AppUserExistsException} from "./exeptions/app.user.exists.exception";
+
+export const BCRYPT_SALT_ROUNDS = 12;
 
 /**
  * https://gist.github.com/zmts/802dc9c3510d79fd40f9dc38a12bccfc
@@ -39,19 +42,15 @@ export class AuthService {
 
     async signup(email: string, plainPassword: string): Promise<string> {
 
-        const user = await this.userService.getByEmail(email);
+        let user = await this.userService.getByEmail(email);
 
-        if (!user) {
-            throw new AppWrongCredentialsException();
+        if (user) {
+            throw new AppUserExistsException(email);
         }
 
         const bcrypt = require('bcrypt');
-
-        const isMatch = await bcrypt.compare(plainPassword, user.password);
-
-        if (!isMatch) {
-            throw new AppWrongCredentialsException();
-        }
+        const password = await bcrypt.hash(plainPassword, BCRYPT_SALT_ROUNDS);
+        user = await this.userService.addUser(email, password);
 
         return this.createToken(user);
     }

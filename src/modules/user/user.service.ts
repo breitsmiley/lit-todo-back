@@ -21,6 +21,10 @@ export class UserService {
         return this.userRepository.findByEmail(email);
     }
 
+    async addUser(email: string, password: string): Promise<User> {
+        return this.userRepository.add(email, password);
+    }
+
     // async validatePassword(email: string, plainPassword: string): Promise<User> {
     //
     //     const bcrypt = require('bcrypt');

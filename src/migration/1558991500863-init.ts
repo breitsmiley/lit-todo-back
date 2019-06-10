@@ -1,4 +1,5 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
+import {BCRYPT_SALT_ROUNDS} from "../modules/auth/auth.service";
 
 export class init1558991500863 implements MigrationInterface {
 
@@ -27,11 +28,10 @@ export class init1558991500863 implements MigrationInterface {
         // ... User
         //--------------------------------
         const bcrypt = require('bcrypt');
-        const saltRounds = 12;
 
         const adminEmail = 'admin@lit.loc';
         const adminPlaintextPassword = 'lit-admin';
-        const password = await bcrypt.hash(adminPlaintextPassword, saltRounds);
+        const password = await bcrypt.hash(adminPlaintextPassword, BCRYPT_SALT_ROUNDS);
 
         const usersSQL = 'INSERT INTO `user` (`email`, `password`) VALUES ' +
             `('${adminEmail}','${password}')`;

@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsDefined, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, IsDefined, IsNotEmpty, MinLength } from 'class-validator';
 import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
@@ -13,5 +13,6 @@ export class AuthSignupArgs {
     @IsDefined()
     @IsNotEmpty()
     @IsString()
+    @MinLength(6)
     password: string;
 }
