@@ -9,7 +9,6 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserRepository } from "./modules/user/repository";
 
-
 @Module({
     imports: [
         ConfigModule,

@@ -13,6 +13,6 @@ export class AuthSignupArgs {
     @IsDefined()
     @IsNotEmpty()
     @IsString()
-    @MinLength(6)
+    @MinLength(3)
     password: string;
 }
