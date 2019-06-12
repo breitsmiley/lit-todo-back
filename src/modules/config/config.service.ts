@@ -128,6 +128,7 @@ export class ConfigService implements TypeOrmOptionsFactory, JwtOptionsFactory, 
             playground: this.isDevEnv,
             // installSubscriptionHandlers: true,
             autoSchemaFile: 'schema.gql',
+            context: ({ req }) => ({ req })
         }
     }
 

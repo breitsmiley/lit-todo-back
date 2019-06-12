@@ -1,9 +1,10 @@
-import { NotFoundException } from '@nestjs/common';
+import {NotFoundException, UseGuards} from '@nestjs/common';
 import { Args, Mutation, Parent, Query, ResolveProperty, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'apollo-server-express';
 import { UserService } from './user.service';
 import { UsersArgs } from "./graphql/dto/user.args";
 import { UserModelGql } from "./graphql/model/user.model.gql";
+import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 
 const pubSub = new PubSub();
 
@@ -21,13 +22,14 @@ export class UserResolver {
     }
 
     @Query(returns => [UserModelGql])
+    @UseGuards(JwtAuthGuard)
     users(@Args() usersArgs:UsersArgs): Promise<UserModelGql[]> {
         return this.userService.findAll(usersArgs);
     }
 
-    @ResolveProperty()
-    async ttt(@Parent() user) {
-        return 666;
-    }
+    // @ResolveProperty()
+    // async ttt(@Parent() user) {
+    //     return 666;
+    // }
 
 }

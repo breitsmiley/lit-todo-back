@@ -5,25 +5,32 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenExpiredError } from "jsonwebtoken";
+import {GqlExecutionContext} from "@nestjs/graphql";
+import {AuthService} from "../auth.service";
+import {ConfigService} from "../../config/config.service";
+import {Observable} from "rxjs";
+import {ExecutionContextHost} from "@nestjs/core/helpers/execution-context-host";
+import { AuthenticationError } from 'apollo-server-core';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-    canActivate(context: ExecutionContext) {
-        // add your custom authentication logic here
-        // for example, call super.logIn(request) to establish a session.
-        // https://stackoverflow.com/questions/53296157/how-to-refresh-token-in-nestjs
-        return super.canActivate(context);
+    getRequest(context: ExecutionContext) {
+        const ctx = GqlExecutionContext.create(context);
+        return ctx.getContext().req;
     }
-
-    handleRequest(err, user, info) {
-        if (info instanceof TokenExpiredError) {
-            // do stuff when token is expired
-            console.log('token expired');
-        }
-
-        if (err || !user) {
-            throw err || new UnauthorizedException();
-        }
-        return user;
-    }
+    // canActivate(context: ExecutionContext) {
+    //     const ctx = GqlExecutionContext.create(context);
+    //     const { req } = ctx.getContext();
+    //     // console.log(req);
+    //
+    //     return super.canActivate(new ExecutionContextHost([req]));
+    // }
+    //
+    // handleRequest(err: any, user: any) {
+    //     console.log('handleRequest', err,user);
+    //     if (err || !user) {
+    //         throw err || new AuthenticationError('GqlAuthGuard');
+    //     }
+    //     return user;
+    // }
 }

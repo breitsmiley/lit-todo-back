@@ -12,7 +12,7 @@ import { DateScalar } from "../../common/graphql/scalars";
     providers: [
         UserService,
         UserResolver, 
-        DateScalar
+        DateScalar,
     ],
     exports: [UserService]
 })
