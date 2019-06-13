@@ -2,9 +2,9 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from "t
 
 @Entity({
     engine: 'InnoDB',
-    name: 'project_color'
+    name: 'color'
 })
-export class ProjectColor {
+export class Color {
 
     @PrimaryGeneratedColumn({
         type: 'int'

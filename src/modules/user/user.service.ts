@@ -40,15 +40,15 @@ export class UserService {
     //     return isMatch ? user : undefined;
     // }
 
-    async findOneById(id: number): Promise<UserModelGql> {
-        return {
-            id: 1,
-            name: 'asd',
-            createdAt: new Date(),
-        };
-    }
+    // async findOneById(id: number): Promise<UserModelGql> {
+    //     return {
+    //         id: 1,
+    //         name: 'asd',
+    //         createdAt: new Date(),
+    //     };
+    // }
 
-    async findAll(usersArgs: UsersArgs): Promise<UserModelGql[]> {
-        return [] as UserModelGql[];
+    async findAll(): Promise<UserModelGql[]> {
+        return this.userRepository.find();
     }
 }

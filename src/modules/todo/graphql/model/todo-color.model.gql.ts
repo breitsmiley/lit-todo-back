@@ -1,17 +1,13 @@
 import { Field, ID, ObjectType } from 'type-graphql';
 
 @ObjectType()
-export class UserModelGql {
+export class TodoColorModelGql {
     @Field(type => ID)
     id: number;
 
     @Field()
-    email: string;
-
-
-    // @Field(type => ID)
-    // ttt?: number;
+    name: string;
 
     @Field()
-    password?: string;
+    code: string;
 }

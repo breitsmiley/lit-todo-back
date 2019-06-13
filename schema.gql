@@ -15,14 +15,38 @@ type Mutation {
 }
 
 type Query {
-  user(id: Float!): UserModelGql!
   users(skip: Int = 0, take: Int = 25): [UserModelGql!]!
   login(email: String!, password: String!): JwtAuthTokenResponseModelGql!
+  colors: [TodoColorModelGql!]!
+  projects: [TodoProjectModelGql!]!
+  tasks: [TodoTaskModelGql!]!
+}
+
+type TodoColorModelGql {
+  id: ID!
+  name: String!
+  code: String!
+}
+
+type TodoProjectModelGql {
+  id: ID!
+  createdAt: Date!
+  status: String!
+  name: String!
+  color: TodoColorModelGql!
+}
+
+type TodoTaskModelGql {
+  id: ID!
+  createdAt: Date!
+  status: String!
+  name: String!
+  priority: String!
+  color: TodoColorModelGql!
 }
 
 type UserModelGql {
   id: ID!
-  name: String!
-  createdAt: Date!
-  ttt: ID!
+  email: String!
+  password: String!
 }

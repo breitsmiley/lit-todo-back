@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { ProjectColor } from "./project.color.entity";
+import { Color } from "./color.entity";
 import { Task } from "./task.entity";
 
 export enum ProjectStatus {
@@ -37,11 +37,11 @@ export class Project {
     })
     name: string;
 
-    @ManyToOne(type => ProjectColor, {
+    @ManyToOne(type => Color, {
         eager: true,
         nullable: false
     })
-    projectColor: ProjectColor;
+    color: Color;
 
     @OneToMany(type => Task, task => task.project)
     tasks: Task[];

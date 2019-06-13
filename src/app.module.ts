@@ -8,6 +8,9 @@ import { ConfigService } from "./modules/config/config.service";
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserRepository } from "./modules/user/repository";
+import { TodoModule } from "./modules/todo/todo.module";
+import { DateScalar } from "./common/graphql/scalars";
+
 
 @Module({
     imports: [
@@ -22,12 +25,17 @@ import { UserRepository } from "./modules/user/repository";
         }),        
         AuthModule,
         UserModule,
+        TodoModule,
         // ProjectModule,
         // TaskModule,
         TypeOrmModule.forFeature([UserRepository]),
+        
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        AppService,
+        DateScalar
+    ],
 })
 export class AppModule {
 }

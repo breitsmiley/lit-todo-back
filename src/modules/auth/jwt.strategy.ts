@@ -15,12 +15,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: configService.jwtSecretKey,
         });
-
-        console.log('JwtStrategy 1');
     }
 
     async validate(payload: IJwtPayload) {
-        console.log('JwtStrategy 2');
         const user = await this.authService.validateUser(payload);
         if (!user) {
             throw new UnauthorizedException();

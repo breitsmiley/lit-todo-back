@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Project } from "./project.entity";
+import { Color } from "./color.entity";
 
 export enum TaskStatus {
     todo = 'todo',
@@ -47,6 +48,12 @@ export class Task {
         enum: TaskPriority,
     })
     priority: TaskPriority;
+
+    @ManyToOne(type => Color, {
+        eager: true,
+        nullable: false
+    })
+    color: Color;
 
     @ManyToOne(type => Project, project => project.tasks)
     project: Project;
